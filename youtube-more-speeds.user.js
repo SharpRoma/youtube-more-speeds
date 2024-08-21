@@ -10,8 +10,6 @@
 // @license MIT
 // ==/UserScript==
 
-(function() {
-    'use strict';
 
     (function() {
     'use strict';
