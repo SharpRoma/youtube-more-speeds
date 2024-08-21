@@ -1,6 +1,6 @@
 // ==UserScript==
 // @version      1.0.0
-// @name         YouTube More Speeds
+// @name         YouTubeMoreSpeeds
 // @description  Adds buttons under a YouTube video with more playback speeds.
 // @namespace    https://github.com/SharpRoma
 // @icon https://www.youtube.com/s/desktop/3748dff5/img/favicon_48.png
@@ -13,31 +13,9 @@
 (function() {
     'use strict';
 
-    // BEGIN waitForKeyElements
-    /**
- * A utility function for userscripts that detects and handles AJAXed content.
- *
- * Usage example:
- *
- *     function callback(domElement) {
- *         domElement.innerHTML = "This text inserted by waitForKeyElements().";
- *     }
- *
- *     waitForKeyElements("div.comments", callback);
- *     // or
- *     waitForKeyElements(selectorFunction, callback);
- *
- * @param {(string|function)} selectorOrFunction - The selector string or function.
- * @param {function} callback - The callback function; takes a single DOM element as parameter.
- *                              If returns true, element will be processed again on subsequent iterations.
- * @param {boolean} [waitOnce=true] - Whether to stop after the first elements are found.
- * @param {number} [interval=300] - The time (ms) to wait between iterations.
- * @param {number} [maxIntervals=-1] - The max number of intervals to run (negative number for unlimited).
- */
     (function() {
     'use strict';
-
-    // BEGIN waitForKeyElements
+    
     function waitForKeyElements(selectorOrFunction, callback, waitOnce = true, interval = 300, maxIntervals = -1) {
         let targetNodes = (typeof selectorOrFunction === "function")
             ? selectorOrFunction()
@@ -66,8 +44,7 @@
             }, interval);
         }
     }
-    // END waitForKeyElements
-
+    
     let funcDone = false;
     const titleElemSelector = 'div#title.style-scope.ytd-watch-metadata';
     const colors = ['#072525', '#287F54', '#C22544'];
@@ -97,7 +74,7 @@
             btn.textContent = '×' + (i.toString().substr(0, 1) === '0' ? i.toString().substr(1) : i.toString());
             btn.addEventListener('click', () => {
                 document.getElementsByTagName('video')[0].playbackRate = i;
-                localStorage.setItem('yt-speed-' + location.href, i); // Сохраняем скорость для текущего видео
+                localStorage.setItem('yt-speed-' + location.href, i);
             });
             moreSpeedsDiv.appendChild(btn);
         }
@@ -107,9 +84,9 @@
             titleElem.after(moreSpeedsDiv);
         }
 
-        restoreSpeed(); // Восстанавливаем скорость при загрузке видео
+        restoreSpeed();
 
-        setInterval(restoreSpeed, 1000); // Периодически проверяем и восстанавливаем скорость
+        setInterval(restoreSpeed, 1000);
 
         funcDone = true;
     }
@@ -119,7 +96,7 @@
         if (video) {
             const savedSpeed = localStorage.getItem('yt-speed-' + location.href);
             if (savedSpeed && video.playbackRate !== parseFloat(savedSpeed)) {
-                video.playbackRate = parseFloat(savedSpeed); // Восстанавливаем скорость
+                video.playbackRate = parseFloat(savedSpeed);
             }
         }
     }
